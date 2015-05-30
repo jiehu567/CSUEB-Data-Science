@@ -1,7 +1,7 @@
 # Site settings
 title: Your awesome title
 email: your-email@domain.com
-baseurl: "https://github.com/CSUEB-Big-Data" # the subpath of your site, e.g. /blog/
+baseurl: "http://ergz.github.io/CSUEB-Big-Data" # the subpath of your site, e.g. /blog/
 github_username: ERGZ
 # Build settings
 markdown: redcarpet
