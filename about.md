@@ -5,15 +5,15 @@ permalink: /about/
 ---
 
 <center><h2>Meet the Team</h2></center>
-#### Professor Eric A. Suess.
+#### Professor Eric A. Suess. [Link to CV]()
 
-#### Nasser Bo Aussaibah
+#### Nasser Bo Aussaibah [Link to Resume]()
 
-#### Taha Monfared
+#### Taha Monfared [Link to Resume]()
 
-#### David Plotz
+#### David Plotz [Link to Resume]()
 
-#### Enrique Emanuel Rodriguez
+#### Enrique Emanuel Rodriguez [Link to Resume]()
 
 
 
