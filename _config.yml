@@ -2,7 +2,7 @@
 title: CSUEB Big Data and Data Science
 description: Big Data and Data Scoence at Cal State East Bay
 email: data.science.CSUEB@gmail.com
-baseurl: "/CSUEB-Big-Data" # the subpath of your site, e.g. /blog/
+baseurl: "http://ergz.github.io/CSUEB-Big-Data" # the subpath of your site, e.g. /blog/
 github_username: ERGZ
 # Build settings
 markdown: redcarpet
