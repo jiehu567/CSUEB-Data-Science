@@ -4,12 +4,14 @@ layout: default
 
 <div class="home">
 
- <center> <h1 class="page-heading">Welcome to Big Data and Data Science at CSUEB</h1></center>
+ <center><h1 class="page-heading">Welcome to Big Data and Data Science at CSUEB</h1></center>
   <p>
     Welcome to the Big Data and Data Science at Cal State East Bay Statistics  Webpage. This is a project that is put together by a group of passionate students and proffesors exploring and innovating in the field of statistics through the use of big data data data science. Among the goals set out is the goal to bring statistics and statisticians closer to the use of new technologies that have recently come to light. Specifically Hadoop and Big Data as well as other Data Science fundementals and frameworks.  
   </p>
-  <h1 class="page-heading">Posts</h1>
-
+  <hr>
+  <br>
+  <h1 class="page-heading">Articles</h1>
+  
   <ul class="post-list">
     {% for post in site.posts %}
       <li>
@@ -22,6 +24,6 @@ layout: default
     {% endfor %}
   </ul>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+  <!-- <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p> -->
 
 </div>
