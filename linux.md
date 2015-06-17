@@ -1,5 +1,5 @@
 ---
 layout: page
 title: Linux
-permalink: /linux/
+permalink: /Linux/
 ---
