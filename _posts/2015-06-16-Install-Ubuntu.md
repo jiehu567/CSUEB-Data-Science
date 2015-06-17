@@ -42,11 +42,11 @@ Once the ISO download is complete we want to create a bootable USB from which we
 
 ### 3. Installing Linux
 
-Once the process of creating the bootable USB drive is complete simply plug in the USB into the computer in which you would like to install linux and restart it, then follow these steps:
+Once the process of creating the bootable USB drive is complete simply plug in the USB into the computer in which you would like to install Linux and restart it, then follow these steps:
 
 1. Your computer should boot into the USB, if your screen turns purple or Ubuntu logo appear you are set. Skip to step 4, otherwise move onto step 2.
 
-2. The main reason a computer does not boot into the USB drive is due to configuration of BIOS. Once again restart your computer, in the process of restarting press the key that boots the computer into the BIOS set up. In most cases this is either F1, F10, F11 or F12. A simple search on google will provide you with exactly this key. 
+2. The main reason a computer does not boot into the USB drive is due to configuration of BIOS. Once again restart your computer, in the process of restarting press the key that boots the computer into the BIOS set up. In most cases this is either F1, F10, F11 or F12. A simple search on Google will provide you with exactly this key. 
 
 3. Now find the menu that provides you with Boot priority. You want to make sure USB/USB Hard Drive is at the top. Now save changes and exit/restart.
 
@@ -60,11 +60,11 @@ Once the process of creating the bootable USB drive is complete simply plug in t
 7. Select **Installation Type**. Here if you wish to run only Ubuntu then select the **replace** option. Otherwise select the **install alongside** option.
 ![install option](/CSUEB-Big-Data/assets/image-installdesktop-4.jpg)
 
-8. If you selected to replace your operating system simply follow on screen instructions to complete the intsalltion.
+8. If you selected to replace your operating system simply follow on screen instructions to complete the installation.
 
 9. If you want to install alongside, you must select how much space to allocate for Ubuntu
 ![install option](/CSUEB-Big-Data/assets/image-installdesktop-5.jpg)
-Genrally at least 20gb is enough.
+Generally at least 20GB is enough.
 
 10. Once you have entered your location and information you will be asked to restart. 
 ![install option](/CSUEB-Big-Data/assets/image-installdesktop-10.jpg)
