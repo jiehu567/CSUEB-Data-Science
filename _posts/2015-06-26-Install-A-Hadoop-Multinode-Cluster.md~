@@ -1,0 +1,9 @@
+---
+layout: page
+title: Install A Hadoop Multinode Cluster
+mathjax: true
+---
+
+<br>
+*This is a follow up to the single node cluster set up in a previous article. A lot of implemnetaion in the this guide assumes you have a single node cluster already set.*
+<br>
