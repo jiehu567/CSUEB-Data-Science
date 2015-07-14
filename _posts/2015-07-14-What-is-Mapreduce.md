@@ -10,6 +10,9 @@ title: What is Mapreduce?
 - [2. A Simple Example](#ex1)
   - [2.1 The Mapper](#mapper)
   - [2.2 The Reducer](#reducer)
+- [3. Writting A Mapreduce Job](#mapred)
+  - [3.1 The Hello World Program](#hello)
+  - [3.2 The Mapper](#hellomap)
 
 <a name = "intro"></a>
 ##1. Introduction 
@@ -66,7 +69,49 @@ what its name would imply namely it takes this set of pairs and *reduces* it to 
 
 *note that Enrique was not in the displayed file, thus he must have appeared somewhere else in the corpus*
 
-
+<a name = "mapred"></a>
 ## 3. Writting a Mapreduce Job
 
-The task in this section is to use R for implementing a Mapreduce job in Hadoop. Although Hadoop and all of its libraries are written in Java, 
+The task in this section is to use R for implementing a Mapreduce job in Hadoop. Although Hadoop and all of its libraries are written in Java, one
+is able to **_stream_** jobs into the Hadoop framework with an API that was built into the libraries of Hadoop. We will show how to do this at the end
+of this section. 
+
+<a name = "hello"></a>
+### 3.1 The Hello World Program
+
+Learning a programming language always begins with writting a program that will print "Hello World!" to the screen, its a simple way to introduce
+users to a new enviroment. In the same fashion we will implement the Hello World program equivalent in Hadoop, a Word Count program. The task is to
+take some text or set of texts and apply the Mapreduce paradigm to get a word count.
+
+<a name = "hellomap"></a>
+### 3.2 The Mapper
+
+Let us develop the mapper for the word count. So first things first we need to able to read in input such as a file. In R there is a built in
+function called `file` that reads input from standard in. We will use this read in the source for which the word count will be implemented.
+
+We use the `file` function as follows:
+
+```R
+textFile <- file("stdin", open = "r")
+```
+
+```R
+#################################################
+# Mapper Function for Word Count
+# in Hadoop
+################################################
+ 
+trimWhiteSpace <- function(line) gsub("(^ +)|( +$)", "", line)
+splitIntoWords <- function(line) unlist(strsplit(line, "[[:space:]]+"))
+ 
+con <- file("stdin", open = "r")
+ 
+while (length(line <- readLines(con, n = 1, warn = FALSE)) > 0) {
+    line <- trimWhiteSpace(line)
+    words <- splitIntoWords(line)
+ 
+    for (w in words)
+        cat(w, "\t1\n", sep="")
+}
+close(con)
+```
