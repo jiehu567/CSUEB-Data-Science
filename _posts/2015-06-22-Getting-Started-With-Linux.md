@@ -7,7 +7,7 @@ title: Getting Started with Linux
 *In this article we look at the basic commands to getting around Linux. The goal of this tutorial is to introduce the reader to basic navigation and file manipulation in the Linux operating system. We seek for the user to begin to use the terminal a lot more by the end of the this article.*
 <hr>
 <a name='top'></a>
-### Table of Content
+## Table of Content
 
 - [1. Terminal Emulator](#Terminal)
 - [2. Navigation](#navigation)
@@ -20,7 +20,7 @@ title: Getting Started with Linux
 
 
 <a name='Terminal'></a>
-### 1. Terminal Emulator 
+## 1. Terminal Emulator 
 [Top](#top)
 
 If you come a Windows background, chances are you have never interacted with a Terminal. Those of you with OS X experience may have once of twice, but much like Windows users, it was never used to its full potential. In Linux the terminal is the most efficient way one can interact with the operating system. There are applications that allows us to visually use Linux, but none come close the efficiency that is experienced using the terminal.
@@ -32,7 +32,7 @@ To open the terminal simply use the shortcut `Ctrl-ALt-t`. This will bring up a 
 Where the entry on the window idicates that the user:`ergz` is logged in at the computer: `ergz-X140e` in this session.
 
 <a name='navigation'></a>
-### 2. Navigation
+## 2. Navigation
 [Top](#top)
 
 In the Linux operating system everything is represented my a folder (directory), from DVD's to USB drives they are all folders, this makes navigation very simple and intuitive. On top of that everything is a set up as a tree stemming from the `/` root directory. Let us explore some commands by navigating the OS.
@@ -69,13 +69,13 @@ play around with the commands until you have a good feel for it.
 Here we see more detail for everything that is in our directory. We will explore what each means later on.
 
 <a name='manipulation'></a>
-### 3. File and Folder Manipulation
+## 3. File and Folder Manipulation
 [Top](#top)  
 
 Now that we can navigate the system, we will begin to create files and folders. We begin with folders
 
 <a name='creatingAndDeletingDirs'></a>
-#### 3.1 Creating and Deleting Directories
+### 3.1 Creating and Deleting Directories
 
 **Create A Directory**
 
@@ -98,7 +98,7 @@ rmdir Data
 an `ls` will confirm this deletion.
 
 <a name="renamingAndMovingDirs"></a>
-#### 3.2 Renaming and Moving Directories
+### 3.2 Renaming and Moving Directories
 
 
 Renaming and moving directories both use the same command in Linux, `mv`. When using it to rename what we are doing is moving it to the current directory with a different name. Lets us now try some of these commands out.
@@ -112,7 +112,7 @@ Next lets move `Datasets` into the `Documents` directory
 <center>![move folder](/CSUEB-Big-Data/assets/terminal-move-folder.png)</center>
 
 <a name="creatingAndDeletingFiles"></a>
-#### 3.3 Creating and Deleting Files
+### 3.3 Creating and Deleting Files
 
 
 **Create A File**
@@ -150,7 +150,7 @@ within nano one can begin to edit the newly created file.
 
 
 <a name="installingApplications"></a>
-### 4. Installing Applications 
+## 4. Installing Applications 
 [Top](#top)
 
 If you are familiar with either the Apple app store or the Android Market place then you are pretty familiar with the basic elements of the **Aptitude repository** used by Ubuntu and other Debian based Linux distributions. The aptitude repository is essentially an app store for different applications, plug-ins, and other resources that are available for Ubuntu. Since they are in the repository one can feel 100% safe and confident of the functionality of all these applications. Although there are some Graphical Interfaces that can be used to interact with the repository, once again the best way to do this is through the command line. We follow up on our previous task of creating a file by installing a different text editor we will use to edit this file. 
@@ -178,7 +178,7 @@ emacs Hello.txt
 you can now edit your file with emacs!
 
 <a name = "installR"></a>
-#### 4.1 Installing R
+### 4.1 Installing R
 
 Installing \\(\texttt{R}\\) form apt repos, will install a good stable version of \\(\texttt{R}\\), but not the latest version lets correct this.
 

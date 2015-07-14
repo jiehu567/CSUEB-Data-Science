@@ -9,7 +9,7 @@ mathjax: true
 <br>
 
 <a name = "top"></a>
-### Table of Contents
+## Table of Contents
 
 - [1. Setting Up A Local Network](#networkSetup)
 - [2. Configure SSH](#ssh)
@@ -23,7 +23,7 @@ mathjax: true
 
 
 <a name = "networkSetup"></a>
-### 1. Setting Up A Local Network 
+## 1. Setting Up A Local Network 
 [Top](#top)
 
 The first thing we want to do is make sure the computers can talk to each other. Assuming they are
@@ -70,7 +70,7 @@ We add the following lines to all the computers:
 ```
 
 <a name = "ssh"></a>
-### 2. Configure SSH 
+## 2. Configure SSH 
 [Top](#top)
 
 What we want to do now is make it such that the master node log in securely to each of the slave nodes without having to enter a password. In order to do this we simply need to copy the masters public ssh key to the `authorized_keys` file in the slave's file (all the slaves). To do this we do the following:
@@ -97,11 +97,11 @@ The authenticity of host 'slave1...
 ```
 
 <a name = "hadoopConfig"></a>
-### 3. Hadoop Cluster Configurations
+## 3. Hadoop Cluster Configurations
 [Top](#top)
 
 <a name = "master"></a>
-#### 3.1 Master Node Configurations
+### 3.1 Master Node Configurations
 
 The first file we want to configure is the `masters` file which is located in `hadoop/etc/hadoop/` if the file doesnt already exist we want to create it.
 We are going to update the file with the line:
@@ -124,7 +124,7 @@ slave3
 add slave machines according to your set up.
 
 <a name = "allNodes"></a>
-#### 3.2 All Nodes
+### 3.2 All Nodes
 
 The next couple of files we want to edit on all machines.
 
@@ -195,11 +195,11 @@ Lastly we edit the yarn file once again we want to change localhost to the maste
 ```
 
 <a name = "start"></a>
-### 4. Starting the Cluster 
+## 4. Starting the Cluster 
 [Top](#top)
 
 <a name = "format"></a>
-#### 4.1 Formatting HDFS
+### 4.1 Formatting HDFS
 
 Prior to starting the cluster we must first format HDFS, we want to do this from within the namenode. We do so the same way we set up the single node cluster:
 
@@ -240,7 +240,7 @@ $ jps
 ```
 
 <a name = "yarn"></a>
-#### 4.3 Starting YARN Daemons
+### 4.3 Starting YARN Daemons
 
 Now we will start the mapred daemons from the machine we wish to have the JobTracker to run on. In our case we want this to be on the `master` node.
 To do this we want to run the command:

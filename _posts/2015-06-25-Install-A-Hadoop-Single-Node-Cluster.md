@@ -8,7 +8,7 @@ title: Installing A Hadoop Single Node Cluster
 <br>
 
 <a name = "top"></a>
-### Table of Contents
+## Table of Contents
 
 - [1. Prerequesites](#prereqs)
   - [1.1 Install a JVM](#JVM)
@@ -21,11 +21,11 @@ title: Installing A Hadoop Single Node Cluster
   - [3.3 Finalizing the Installation](#finalizing)
 
 <a name = "prereqs"></a>
-### 1. Prerequesites
+## 1. Prerequesites
 [Top](#top)
 
 <a name = "JVM"></a>
-#### 1.1 Install Java 
+### 1.1 Install Java 
 
 We first install a Java Virtual Machine. I highly recommend to use the JVM by oracle. We can install it with the following:
 
@@ -43,7 +43,7 @@ Java(TM) SE Runtime Environment (build 1.7.0_80-b15)
 Java HotSpot(TM) 64-Bit Server VM (build 24.80-b11, mixed mode)
 ```
 <a name = "createUser"></a>
-#### 1.2 Create the hduser
+### 1.2 Create the hduser
 
 We now create a dedicated hadoop group and user which we will call `hadoop` and `hduser` respectively.
 
@@ -55,7 +55,7 @@ $ sudo adduser --ingroup hadoop hduser
 ``` 
 
 <a name = "openSSH"></a>
-#### 1.3 Install Open SSH
+### 1.3 Install Open SSH
 
 ``` bash
 $ sudo apt-get install openssh-server
@@ -71,7 +71,7 @@ $ which sshd
 ```
 
 <a name ="ssh"></a>
-### 2 Set Up SSH
+## 2 Set Up SSH
 [Top](#top)
 
 First we want to add `hduser` to the sudo list such that we have administrator access.
@@ -95,11 +95,11 @@ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 ```
 
 <a name = "hadoop"></a>
-### 3 Install Hadoop
+## 3 Install Hadoop
 [Top](#top)
 
 <a name = "getHadoop"></a>
-#### 3.1 Downloading Hadoop
+### 3.1 Downloading Hadoop
 
 Let us retrieve the latest stable version of Hadoop, as of the creation of this guide the latest is 2.6.0, make sure you are logged in as hduser for the rest of the guide:
 
@@ -125,7 +125,7 @@ $ sudo chown -R hduser:hadoop /usr/local/hadoop
 ```
 
 <a name = "configHadoop"></a>
-#### 3.2 Configuring Hadoop
+### 3.2 Configuring Hadoop
 
 **Bashrc File**
 
@@ -256,7 +256,7 @@ Lastly we also want to edit the `yarn-site.xml` file in the same directory as th
 ```
 
 <a name = "finalizing"></a>
-#### 3.3 Finalizing the Installation 
+### 3.3 Finalizing the Installation 
 
 We finish up the installation with a few steps. First we want to format the new Hadoop File System so we can begin to use it. We do:
 

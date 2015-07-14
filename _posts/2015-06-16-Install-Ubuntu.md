@@ -13,7 +13,7 @@ Linux is an operating system that has been around for a very long time, and has 
 
 ## Get and Install Linux 
 
-### 1. Getting a Linux Distribution 
+## 1. Getting a Linux Distribution 
 
 A Linux Distribution is an incarnation of Linux, they differ from each other not so much by performance but by functionality and its interaction with the user. You can check out all the distros at [Distro Watch](http://distrowatch.com/). For this tutorial we will using the Ubuntu Distribution for its ease of use and easy installation, for me this is the most important part. Once we have it installed it, since its open source, we can change it anyway we want. If you would like to learn more about Ubuntu visit the [Ubuntu Website](http://ubuntu.com).
 
@@ -21,7 +21,7 @@ Let us now grab this operating system, our goal is to create a bootable USB from
 
 For the most part if your computer was made in the last 4 to 5 years then you can grab the 64-bit version of Ubuntu, otherwise if you have an old computer then 32-bit is the choice for you. 
 
-### 2. Creating a Bootable USB Drive
+## 2. Creating a Bootable USB Drive
 
 Once the ISO download is complete we want to create a bootable USB from which we can install Ubuntu. 
 
@@ -40,7 +40,7 @@ Once the ISO download is complete we want to create a bootable USB from which we
 7. Simply click create and just finish until the process is complete.
 
 
-### 3. Installing Linux
+## 3. Installing Linux
 
 Once the process of creating the bootable USB drive is complete simply plug in the USB into the computer in which you would like to install Linux and restart it, then follow these steps:
 
