@@ -69,4 +69,4 @@ what its name would imply namely it takes this set of pairs and *reduces* it to 
 
 ## 3. Writting a Mapreduce Job
 
-The task in this section is to use R
+The task in this section is to use R for implementing a Mapreduce job in Hadoop. Although Hadoop and all of its libraries are written in Java, 

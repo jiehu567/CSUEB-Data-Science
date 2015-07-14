@@ -1,8 +1,8 @@
 # Site settings
 title: CSUEB Data Science Group 
-description: Big Data and Data Science at Cal State East Bay
+description: Data Science at Cal State East Bay
 email: data.science.CSUEB@gmail.com
-baseurl: "/CSUEB-Big-Data" # the subpath of your site, e.g. /blog/
+baseurl: "/CSUEB-Data-Science" # the subpath of your site, e.g. /blog/
 github_username: ERGZ
 # Build settings
 markdown: redcarpet
