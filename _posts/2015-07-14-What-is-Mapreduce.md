@@ -280,7 +280,7 @@ cat 74.txt.utf-8 | Rscript WC_mapper.R | sort -k1,1 | Rscript WC_reducer.R | les
 ```
 
 it should be readily obvious where our program falls short. First off and most importantly we note
-that there a lot mistakes in parsing what a "word" means. This is actually quite a challenging problem for data that is constantly growing and "moving".
+that there a lot mistakes in parsing what a "word" means. This is actually quite a challenging problem for data that is constantly growing and "moving" (not to mention typed in by human beings).
 
 The second problem may not be so obvious but let us run the above command but with a little extra, lets add `time` to the beginning to time several aspects of our procedure.
 
