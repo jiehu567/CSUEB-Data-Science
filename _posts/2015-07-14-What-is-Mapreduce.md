@@ -14,6 +14,7 @@ title: What is Mapreduce?
   - [3.1 The Hello World Program](#hello)
   - [3.2 The Word Count Mapper](#hellomap)
   - [3.3 The Word Count Reducer](#helloreducer)
+  - [3.4 Test the Word Count Job](#test)
 
 <a name = "intro"></a>
 ##1. Introduction 
@@ -166,4 +167,132 @@ splitLine <- function(line) {
 }
 ```
 
-Next we want to create an `enviroment` in R so keep track of our counts. 
+Next we want to create an `enviroment` in R to keep track of all counts, we do with the following:
+*If you are unfamiliar with enviroments check out this tutorial for a quick reference* [R Enviroments Tutorial](http://adv-r.had.co.nz/Environments.html)
+
+```r
+WC.env = new.env(hash = TRUE) # we want to create a hash table in the env
+```
+
+Once again as we did before we want to open a standard in stream to read in data, in this case we will be
+reading in the data given by the Mapper script. We do this with the following:
+
+```r
+mapperStream <- file("stdin", open = "r") # the open parameter indicates we are reading from this stream, optionally we can also write
+```
+
+With these ready we can begin the counting with a `while` loop:
+
+```r
+while(length(line <- readLines(mapperStream, n = 1, warn = FALSE)) > 0) {
+    line <- gsub("(^ +)|( +$)", "", line) # trim leading and trailing whitespaces
+    split <- splitLine(line) # use the functio we defined above
+    word <- split$word
+    count <- split$count
+ 
+    if (exists(word, envir = WC.env, inherits = FALSE)) {
+        oldcount <- get(word, envir = WC.env)
+        assign(word, oldcount + count, envir = WC.env)
+    }
+    else assign(word, count, envir = WC.env)
+}	
+#to close the stream always good practice to do so 
+close(mapperStream)
+
+## # to output the results
+for (w in ls(WC.env, all = TRUE))
+    cat(w, "\t", get(w, envir = WC.env), "\n", sep = "")
+```
+
+All together our script should look like this:
+
+```r
+#! /usr/bin/env Rscript
+
+##################################
+# The Reducer script for Mapred
+# Word Count
+#################################
+
+splitLine <- function(line) {
+    val <- unlist(strsplit(line, "\t"))
+    list(word = val[1], count = as.integer(val[2]))
+}
+
+WC.env = new.env(hash = TRUE) # we want to create a hash table in the env
+
+mapperStream <- file("stdin", open = "r") # the open parameter indicates we are reading from this stream, optionally we can also write
+
+while(length(line <- readLines(mapperStream, n = 1, warn = FALSE)) > 0) {
+    line <- gsub("(^ +)|( +$)", "", line) # trim leading and trailing whitespaces
+    split <- splitLine(line) # use the functio we defined above
+    word <- split$word
+    count <- split$count
+ 
+    if (exists(word, envir = WC.env, inherits = FALSE)) {
+        oldcount <- get(word, envir = WC.env)
+        assign(word, oldcount + count, envir = WC.env)
+    }
+    else assign(word, count, envir = WC.env)
+}	
+#to close the stream always good practice to do so 
+close(mapperStream)
+
+## # to output the results
+for (w in ls(WC.env, all = TRUE))
+    cat(w, "\t", get(w, envir = WC.env), "\n", sep = "")
+```
+
+save this file as `WC_reducer.R`
+
+<a name = "test"></a>
+### 3.4 Test the Word Count Job
+We can now test the two scripts together, once again this is possible because we are working directly
+with the standard i/o of the Operating System.
+
+Open up the terminal and type in the following:
+
+```
+$ echo "this is is a test for for the the the mapred job job" | Rscript WC_mapper.R | sort -k1,1 Rscript WC_reducer
+
+## Output
+a    	1
+for	    2
+is	    2
+job  	2
+mapred	1
+test	1
+the 	3
+this	1
+```
+
+Let us now try a complex test, lets download **_The Adventures of Tom Sawyer_**, to do so either go to [https://www.gutenberg.org/ebooks/74](https://www.gutenberg.org/ebooks/74), or simply type in:
+
+```
+wget https://www.gutenberg.org/ebooks/74.txt.utf-8
+```
+
+into the terminal to download the text. Make sure that the scripts and the text are all in the same directory. Now type in the following into the terminal:
+
+```
+cat 74.txt.utf-8 | Rscript WC_mapper.R | sort -k1,1 | Rscript WC_reducer.R | less
+# use arrows to scroll down and 'q' to exit
+```
+
+it should be readily obvious where our program falls short. First off and most importantly we note
+that there a lot mistakes in parsing what a "word" means. This is actually quite a challenging problem for data that is constantly growing and "moving".
+
+The second problem may not be so obvious but let us run the above command but with a little extra, lets add `time` to the beginning to time several aspects of our procedure.
+
+```
+time cat 74.txt.utf-8 | Rscript WC_mapper.R | sort -k1,1 | Rscript WC_reducer.R | less
+
+#output after pressing 'q'
+real	0m5.150s
+user	0m3.896s
+sys	0m0.501s
+```
+
+so it took 5 seconds to complete a word count on a file that is 412kb's in size, surely there is room for improvement here as well.
+
+
