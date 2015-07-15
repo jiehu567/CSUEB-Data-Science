@@ -12,7 +12,8 @@ title: What is Mapreduce?
   - [2.2 The Reducer](#reducer)
 - [3. Writting A Mapreduce Job](#mapred)
   - [3.1 The Hello World Program](#hello)
-  - [3.2 The Mapper](#hellomap)
+  - [3.2 The Word Count Mapper](#hellomap)
+  - [3.3 The Word Count Reducer](#helloreducer)
 
 <a name = "intro"></a>
 ##1. Introduction 
@@ -84,9 +85,9 @@ users to a new enviroment. In the same fashion we will implement the Hello World
 take some text or set of texts and apply the Mapreduce paradigm to get a word count.
 
 <a name = "hellomap"></a>
-### 3.2 The Mapper
+### 3.2 The Word Count Mapper
 
-Let us develop the mapper for the word count. So first things first we need to able to read in input such as a file. In R there is a built in
+Let us develop the mapper for the word count. First things first we need to able to read in input such as a txt file. In R there is a built in
 function called `file` that reads input from standard in. We will use this read in the source for which the word count will be implemented.
 
 We use the `file` function as follows:
@@ -95,23 +96,73 @@ We use the `file` function as follows:
 textFile <- file("stdin", open = "r")
 ```
 
+the keyword `stdin` means we can specify what file to work with at the command line and other OS independent methods.
+
+Next we implement the rest of the mapper through a `while` loop that will read in input as long as there is a next line in the file.
+
+```R
+while (length(line <- readLines(textFile, n = 1, warn = FALSE)) > 0) {
+	# first we trim white space at the beginning and end
+	line <- gsub("(^ +)|( +$)", "", line)
+	# now we split each word in the line
+    words <- unlist(strsplit(line, "[[:space:]]+"))
+
+	# we output the the results with the cat command
+    for (w in words)
+        cat(w, "\t1\n", sep="")
+}
+
+```
+
+As a whole the mapper will look like this, also want to save this file as `WC_mapper.R`
+
 ```R
 #################################################
 # Mapper Function for Word Count
 # in Hadoop
 ################################################
- 
-trimWhiteSpace <- function(line) gsub("(^ +)|( +$)", "", line)
-splitIntoWords <- function(line) unlist(strsplit(line, "[[:space:]]+"))
- 
-con <- file("stdin", open = "r")
- 
-while (length(line <- readLines(con, n = 1, warn = FALSE)) > 0) {
-    line <- trimWhiteSpace(line)
-    words <- splitIntoWords(line)
- 
+
+textFile <- file("stdin", open = "r")
+
+while (length(line <- readLines(textFile, n = 1, warn = FALSE)) > 0) {
+	line <- gsub("(^ +)|( +$)", "", line)
+    words <- unlist(strsplit(line, "[[:space:]]+"))
+
     for (w in words)
         cat(w, "\t1\n", sep="")
 }
-close(con)
+ 
+ 
+close(textFile)
 ```
+
+now since we are working with std i/o means that we don't need Hadoop to test our code let us do the following
+in the command line:
+
+```bash
+# note the whitespace at beginning and end
+# to emphasize the trimming that takes place in the while loop
+$ echo " these are some words " | Rscript WC_mapper.R
+
+#Output
+these	1
+are	    1
+some	1
+words	1
+```
+
+<a name = "helloreducer"></a>
+### 3.3 The Word Count Reducer
+
+Now we create another R script for implementing the reducing portion of Mapreduce
+
+What we want to do first is create a function that will split the line we are on and assign the word to a `word` variable
+and the value to a `count` varaible
+
+```R
+splitLine <- function(line) {
+    val <- unlist(strsplit(line, "\t"))
+    list(word = val[1], count = as.integer(val[2]))
+}
+```
+
