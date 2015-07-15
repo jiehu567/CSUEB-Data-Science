@@ -28,7 +28,7 @@ If you come a Windows background, chances are you have never interacted with a T
 Opening the Terminal:
 
 To open the terminal simply use the shortcut `Ctrl-ALt-t`. This will bring up a window similar to this:
-<center>![The terminal](/CSUEB-Big-Data/assets/the-terminal.png)</center>
+<center>![The terminal](/CSUEB-Data-Science/assets/the-terminal.png)</center>
 Where the entry on the window idicates that the user:`ergz` is logged in at the computer: `ergz-X140e` in this session.
 
 <a name='navigation'></a>
@@ -43,7 +43,7 @@ Open the terminal and type `ls`. The `ls` command will list all directories in t
 
 Here is some sample output of the two commands above
 <center>
-![terminal ls and pwd](/CSUEB-Big-Data/assets/terminal-ls-pwd.png)
+![terminal ls and pwd](/CSUEB-Data-Science/assets/terminal-ls-pwd.png)
 </center>
 
 **Changing Directories**
@@ -58,13 +58,13 @@ Once we know what directories we have, we can navigate to them with the command 
 
 The output will show navigation into the `Documents` folder followed by navigation to the Downloads folder and back home, each time a new directory is entered we print `pwd`.
 <center>
-![terminal navigation](/CSUEB-Big-Data/assets/terminal-navigation.png)
+![terminal navigation](/CSUEB-Data-Science/assets/terminal-navigation.png)
 </center>
 
 play around with the commands until you have a good feel for it.
 
 *When using the `ls` command it is possible to get more details, specifically to show folders in list view with the `-l` option. So in the terminal one would type `ls -l`*
-<cente>![ls -l](/CSUEB-Big-Data/assets/terminal-ls-l.png)</center>
+<cente>![ls -l](/CSUEB-Data-Science/assets/terminal-ls-l.png)</center>
 
 Here we see more detail for everything that is in our directory. We will explore what each means later on.
 
@@ -105,11 +105,11 @@ Renaming and moving directories both use the same command in Linux, `mv`. When u
 
 Lets first create the folder `Data` we had just deleted. We first want to rename it to `Datasets`.
 <center>
-![REname folder](/CSUEB-Big-Data/assets/terminal-rename-folder.png)
+![REname folder](/CSUEB-Data-Science/assets/terminal-rename-folder.png)
 </center>
 
 Next lets move `Datasets` into the `Documents` directory
-<center>![move folder](/CSUEB-Big-Data/assets/terminal-move-folder.png)</center>
+<center>![move folder](/CSUEB-Data-Science/assets/terminal-move-folder.png)</center>
 
 <a name="creatingAndDeletingFiles"></a>
 ### 3.3 Creating and Deleting Files
@@ -144,7 +144,7 @@ nano Hello.txt
 ```
 
 doing so will bring to the terminal based text editor called nano:
-![nano example](/CSUEB-Big-Data/assets/nano-example.png)
+![nano example](/CSUEB-Data-Science/assets/nano-example.png)
 
 within nano one can begin to edit the newly created file. 
 

@@ -31,11 +31,11 @@ Once the ISO download is complete we want to create a bootable USB from which we
 
 3. Now just open the USB installer.
 
-4. Select Ubuntu from the dropdown Distro List ![Select Distro List](/CSUEB-Big-Data/assets/usb-universal-ss2.PNG)
+4. Select Ubuntu from the dropdown Distro List ![Select Distro List](/CSUEB-Data-Science/assets/usb-universal-ss2.PNG)
 
-5. Click browse and select the ISO image downloaded from Ubuntu ![Select Image](/CSUEB-Big-Data/assets/usb-universal-ss3.PNG)
+5. Click browse and select the ISO image downloaded from Ubuntu ![Select Image](/CSUEB-Data-Science/assets/usb-universal-ss3.PNG)
 
-6. Select the appropriate drive containing your USB. Make sure you select Format for the drive. ![Select USB](/CSUEB-Big-Data/assets/usb-universal-ss4.PNG)
+6. Select the appropriate drive containing your USB. Make sure you select Format for the drive. ![Select USB](/CSUEB-Data-Science/assets/usb-universal-ss4.PNG)
 
 7. Simply click create and just finish until the process is complete.
 
@@ -50,21 +50,21 @@ Once the process of creating the bootable USB drive is complete simply plug in t
 
 3. Now find the menu that provides you with Boot priority. You want to make sure USB/USB Hard Drive is at the top. Now save changes and exit/restart.
 
-4. Once you are booted into Ubuntu you have the option to Boot into Live Mode or Install. **Select Install** ![install option](/CSUEB-Big-Data/assets/installdesktop1.jpg)
+4. Once you are booted into Ubuntu you have the option to Boot into Live Mode or Install. **Select Install** ![install option](/CSUEB-Data-Science/assets/installdesktop1.jpg)
 
 5. You will be presented with a wireless set up, simply select the appropriate network and password. 
 
 6. Next you are presented with a checklist window. Make sure all of the requirements are met. I also recommend you select **Download Updates** and **Install Third-Party software**.    
-![install option](/CSUEB-Big-Data/assets/installdesktop-2.jpg) 
+![install option](/CSUEB-Data-Science/assets/installdesktop-2.jpg) 
 
 7. Select **Installation Type**. Here if you wish to run only Ubuntu then select the **replace** option. Otherwise select the **install alongside** option.
-![install option](/CSUEB-Big-Data/assets/image-installdesktop-4.jpg)
+![install option](/CSUEB-Data-Science/assets/image-installdesktop-4.jpg)
 
 8. If you selected to replace your operating system simply follow on screen instructions to complete the installation.
 
 9. If you want to install alongside, you must select how much space to allocate for Ubuntu
-![install option](/CSUEB-Big-Data/assets/image-installdesktop-5.jpg)
+![install option](/CSUEB-Data-Science/assets/image-installdesktop-5.jpg)
 Generally at least 20GB is enough.
 
 10. Once you have entered your location and information you will be asked to restart. 
-![install option](/CSUEB-Big-Data/assets/image-installdesktop-10.jpg)
+![install option](/CSUEB-Data-Science/assets/image-installdesktop-10.jpg)

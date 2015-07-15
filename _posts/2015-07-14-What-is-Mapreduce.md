@@ -166,3 +166,4 @@ splitLine <- function(line) {
 }
 ```
 
+Next we want to create an `enviroment` in R so keep track of our counts. 
