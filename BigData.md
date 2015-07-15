@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Hadoop
-permalink: /Hadoop/
+title: Big Data
+permalink: /BigData/
 ---
 
 Here you can find posts and articles related to Hadoop and Big Data in General
