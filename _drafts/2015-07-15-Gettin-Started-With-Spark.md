@@ -18,6 +18,10 @@ future articles*
 - [3. Installing Spark](#installSpark)
   - [3.1 Getting Spark](#gettingSpark)
   - [3.2 Configuring Spark ](#configureSpark)
+- [4. Working with Spark](#workingWithSpark)
+  - [4.1 Terminology and Basic Concepts](#terminology)
+  - [4.2 Basic Statistics](#basicStats)
+  - [4.3 Simple Linear Regression](#linearRegression)
 
 <a name = "whatIsSpark"></a>
 ##1. What is Spark?
@@ -61,7 +65,7 @@ In this section we will go through a stand alone installation as well as one in 
 
 <a name = "gettingSpark"></a>
 ### 3.1 Getting Spark and Setting Up 
-In this article we will be using the Prebuilt version of Spark for Hadoop 2.6 or later. If you do not have the hadoop 2.6 HDFS already on the machine you would like to install spark on, you can do so by following this article: [Installing A Hadoop Single Node Cluster](http://ergz.github.io/CSUEB-Data-Science/2015/06/25/Install-A-Hadoop-Single-Node-Cluster.html).
+In this article we will be using the Prebuilt version of Spark for Hadoop 2.6 or later. If you want spark to sit ontop of HDFS you will need to have hadoop 2.6 HDFS already on the machine you would like to install spark on. If you already don't have it you can do so by following this article: [Installing A Hadoop Single Node Cluster](http://ergz.github.io/CSUEB-Data-Science/2015/06/25/Install-A-Hadoop-Single-Node-Cluster.html).
 
 We get a prebuilt version of Spark 1.4.1 [here](http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1.tgz), we can also download and extract via the command line with the following:
 
@@ -117,5 +121,92 @@ once again this is assuming you followed the guide for hadoop, change accoriding
 
 The installtion process is now complete, we now explore Spark with some simple examples.
 
+<a name = "workingWithSpark"></a>
+## 4. Working with Spark 
+
+We jump into spark with the Machine Learning Library provided by Spark. 
+
+<a name = "terminology"></a>
+### 4.1 Terminology and Basic Concepts
+
+
+<a name = "basicStats"></a>
+### 4.2 Basic Statistics 
+
+Lets explore the Statistics Library in the Machine Learning Library. First we start the `pyspark` shell with
+
+```bash
+$ pyspark
+```
+
+and import several modules
+
+```python
+import numpy as np
+from pyspark.mllib.stat import Statistics
+```
+
+Lets now create some data to explore,
+
+
+```python
+# x1 a vector of values from nornal distribution with mu = 2.1 and sigma = .43, total 1000 values
+x1 = np.random.normal(2.1, .43, 1000)
+# error terms added for some noise
+errorTerms = np.random.normal(0,.21,1000)
+x2 = 3 * x1 + errorTerms
+y = 3.2 * x1 + 1.1 * x2 + errorTerms
+
+# aggregating to a single matrix
+dataM = np.array([y, x1, x2])
+# note the dimensions are not correct
+dataM.shape # (3, 1000)
+# we correct this with
+dataM = np.transpose(dataM)
+dataM.shape # (1000, 3)
+```
+
+at the moment this `dataM` matrix is a dense numpy matrix and thus cannot take any of the advantages that Spark provides. We convert it to a parallelized object with the following command.
+
+```python
+dataMPar = sc.parallelize(dataM)
+```
+
+We can now use functionality provided by Spark, namely we can obtain some descriptive statistics for each column of our data matrix.
+
+```python
+dataSumm = Statistics.colStats(dataMPar)
+
+print dataSumm.mean() # [ 13.70850977   2.10785612   6.32711359]
+
+print dataSumm.variance() # [ 8.45450811  0.19589769  1.80348414]
+```
+
+the functions available to dataSumm, `colStats` objects, are: `'call', 'count', 'max', 'mean', 'min', 'normL1', 'normL2', 'numNonzeros', 'variance'`, each of which yields a numpy array object.
+
+
+<a name = "linearRegression"></a>
+### 4.3 Simple Linear Regression for Machine Learning
+
+#### Setting up the Data
+
+We will use the data produced in the previous section, and carry on with the same variable names.
+
+First let us split the data matrix, to a training and test set. Note that this split must done on the original `dataM` matrix.
+
+```python
+dataTrain = dataM[0:899,:]
+dataTest = dataM[900:1000,:]
+```
+
+and now to parallelize the matrices
+
+```python
+dataTrnP = sc.parallelize(dataTrain)
+dataTstP = sc.parallelize(dataTest)
+```
+
+The goal is to train the Linear Regression Model using the training set. In this examples we will be using an Ordinary Least Squres (OLS) approach to train
+the parameters in the algorithm.
 
 
