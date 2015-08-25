@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Install Linux (Ubuntu 14.04)
+comments: True
 ---
 
 ## What is Linux and Why Do I Need It?
@@ -68,3 +69,4 @@ Generally at least 20GB is enough.
 
 10. Once you have entered your location and information you will be asked to restart. 
 ![install option](/CSUEB-Data-Science/assets/image-installdesktop-10.jpg)
+

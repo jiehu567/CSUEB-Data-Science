@@ -22,6 +22,8 @@ future articles*
   - [4.1 Terminology and Basic Concepts](#terminology)
   - [4.2 Basic Statistics](#basicStats)
   - [4.3 Simple Linear Regression](#linearRegression)
+        - [Setting Up Data](#dataSetup)
+    	- [Labeled Point](#labeledPoint)
 
 <a name = "whatIsSpark"></a>
 ##1. What is Spark?
@@ -67,13 +69,13 @@ In this section we will go through a stand alone installation as well as one in 
 ### 3.1 Getting Spark and Setting Up 
 In this article we will be using the Prebuilt version of Spark for Hadoop 2.6 or later. If you want spark to sit ontop of HDFS you will need to have hadoop 2.6 HDFS already on the machine you would like to install spark on. If you already don't have it you can do so by following this article: [Installing A Hadoop Single Node Cluster](http://ergz.github.io/CSUEB-Data-Science/2015/06/25/Install-A-Hadoop-Single-Node-Cluster.html).
 
-We get a prebuilt version of Spark 1.4.1 [here](http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1.tgz), we can also download and extract via the command line with the following:
+We get a prebuilt version of Spark 1.4.1 [here](http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1-bin-hadoop2.6.tgz), we can also download and extract via the command line with the following:
 
 ```bash
 # to download directly
-wget http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1.tgz
+wget http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1-bin-hadoop2.6.tgz
 # to extract the compressed file
-tar xvzf spark-1.4.1.tgz
+tar xvzf spark-1.4.1-bin-hadoop2.6.tgz
 ```
 
 now we add the following to the bashrc file
@@ -129,6 +131,7 @@ We jump into spark with the Machine Learning Library provided by Spark.
 <a name = "terminology"></a>
 ### 4.1 Terminology and Basic Concepts
 
+The most central part of Spark are **RDD's (Resilient Distributive Datasets)**. RDD's allow us to work with large amounts of data and data sets in parallel.  
 
 <a name = "basicStats"></a>
 ### 4.2 Basic Statistics 
@@ -188,6 +191,7 @@ the functions available to dataSumm, `colStats` objects, are: `'call', 'count', 
 <a name = "linearRegression"></a>
 ### 4.3 Simple Linear Regression for Machine Learning
 
+<a name = "dataSetup"></a>
 #### Setting up the Data
 
 We will use the data produced in the previous section, and carry on with the same variable names.
@@ -209,4 +213,46 @@ dataTstP = sc.parallelize(dataTest)
 The goal is to train the Linear Regression Model using the training set. In this examples we will be using an Ordinary Least Squres (OLS) approach to train
 the parameters in the algorithm.
 
+<a name = "labeledPoint"></a>
+#### Labeled Points
+
+In order to do linear regression in Spark we introduce the `LabeledPoint` data type. A `LabeledPoint` data type is a vector that has with it a *label* or *response* associated
+with it. So we need to convert the rows of the training set, `dataTrnP` to `LabeledPoint`s. We can do this in two ways, we show both, it will also allows us to see the best way to pass function to Spark.
+
+**The Function Approach**
+
+```python
+from pyspark.mllib.regression import LabeledPoint
+
+def parsePoint(line):
+    values = [x for x in line]
+	return LabeledPoint(values[0], values[1:])
+	
+# we then call on this function
+labeledData = dataTrnP.map(parsePoint)
+```
+
+**The Lambda Approach**
+
+If you are not familiar with **lambda** expression in python, they are simply "anonymous" functions or "throw away" functions.
+
+```python
+from pyspark.mllib.regression import LabeledPoint
+
+labeledData = dataTrnP.map(lambda p: LabeledPoint(p[0], p[1:]))
+```
+
+both will yield the same result, but it is preffered by Spark, to if possible express functions with a lambda expression. 
+
+
+#### Regression
+
+We are now able to train our model with the training data set.
+
+```python
+from pyspark.mllib.regression import LinearRegressionModel
+
+
+lrm = LinearRegressionWithSGD.train(labeledData)
+```
 
