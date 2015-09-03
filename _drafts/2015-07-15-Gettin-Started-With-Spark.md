@@ -6,8 +6,8 @@ title: Getting Started With Spark
 
 <center>![spark logo](/CSUEB-Data-Science/assets/sparkLogo.png)</center>
 
-*In this article we take a look at a few first steps in wotking with Spark. We will introduce what spark is, how its
-different from Hadoop. We then show an installtion of Spark, and finish off with a few examples that will lead into
+*In this article we take a look at a few first steps in working with Spark. We will introduce what spark is, how its
+different from Hadoop. We then show an installation of Spark, and finish off with a few examples that will lead into
 future articles*
 
 <a name = "top"></a>
@@ -21,9 +21,8 @@ future articles*
 - [4. Working with Spark](#workingWithSpark)
   - [4.1 Terminology and Basic Concepts](#terminology)
   - [4.2 Basic Statistics](#basicStats)
-  - [4.3 Simple Linear Regression](#linearRegression)
-        - [Setting Up Data](#dataSetup)
-    	- [Labeled Point](#labeledPoint)
+  - [4.3 Writing a Script Job](#script)
+
 
 <a name = "whatIsSpark"></a>
 ##1. What is Spark?
@@ -131,7 +130,17 @@ We jump into spark with the Machine Learning Library provided by Spark.
 <a name = "terminology"></a>
 ### 4.1 Terminology and Basic Concepts
 
-The most central part of Spark are **RDD's (Resilient Distributive Datasets)**. RDD's allow us to work with large amounts of data and data sets in parallel.  
+The most central part of Spark are **RDD's (Resilient Distributive Datasets)**. RDD's allow us to work with large amounts of data and data sets in parallel. 
+
+Spark ships with three different interactive shells, these include:
+
+* pyspark: an interactive python shell 
+
+* spark-shell: an interactive scala shell (Spark is written in Scala)
+
+* sparkR: an interative R shell 
+
+In this guide we will introduce the basic examples through the `pyspark` shell.   
 
 <a name = "basicStats"></a>
 ### 4.2 Basic Statistics 
@@ -187,72 +196,126 @@ print dataSumm.variance() # [ 8.45450811  0.19589769  1.80348414]
 
 the functions available to dataSumm, `colStats` objects, are: `'call', 'count', 'max', 'mean', 'min', 'normL1', 'normL2', 'numNonzeros', 'variance'`, each of which yields a numpy array object.
 
+<a name = "script"></a>
+### 4.3 Writing A Script Job
 
-<a name = "linearRegression"></a>
-### 4.3 Simple Linear Regression for Machine Learning
+Being able to use the shell is great for testing out code and exploring data on the fly, but we need a better way to write algorithms, and jobs
+for spark. Here we introduce how to write a python script to work with spark, and submitting this to Spark for execution. 
 
-<a name = "dataSetup"></a>
-#### Setting up the Data
+To keep things simple we will simply implement the code we have written above into a python script. 
 
-We will use the data produced in the previous section, and carry on with the same variable names.
+There are only a few changes that need to be made for this script file to work, namely we need to import the Spark Context, and Spark Configuration.
+In the shell this is done automatically, so we did not have to worry about it. So we create a new file call it, `columnStats.py`, and add this to the top:
 
-First let us split the data matrix, to a training and test set. Note that this split must done on the original `dataM` matrix.
-
-```python
-dataTrain = dataM[0:899,:]
-dataTest = dataM[900:1000,:]
+```python 
+# to import the modules
+from pyspark import SparkContext, SparkConf
 ```
 
-and now to parallelize the matrices
+next we need to add a name for the application and create the `sc` so it can be used as above.
 
-```python
-dataTrnP = sc.parallelize(dataTrain)
-dataTstP = sc.parallelize(dataTest)
+```python 
+conf = SparkConf().setAppName("columnStats")
+sc = SparkContext(conf = conf)
 ```
 
-The goal is to train the Linear Regression Model using the training set. In this examples we will be using an Ordinary Least Squres (OLS) approach to train
-the parameters in the algorithm.
+once this is dont the we can implement code very much the same way we did in the shell. Lets create a program that created random data, parallelizes it and lastly outputs some descriptive statistics on it. As a whole the script will look like this:
 
-<a name = "labeledPoint"></a>
-#### Labeled Points
+```python 
 
-In order to do linear regression in Spark we introduce the `LabeledPoint` data type. A `LabeledPoint` data type is a vector that has with it a *label* or *response* associated
-with it. So we need to convert the rows of the training set, `dataTrnP` to `LabeledPoint`s. We can do this in two ways, we show both, it will also allows us to see the best way to pass function to Spark.
+from pyspark import SparkContext, SparkConf
+from pyspark.mllib.stat import Statistics
+import numpy as np
 
-**The Function Approach**
+conf = SparkConf().setAppName("columnStats")
+sc = SparkContext(conf = conf)
 
-```python
-from pyspark.mllib.regression import LabeledPoint
+# create some data 
+x1 = np.random.normal(.11, .03, 1000)
+x2 = 1.45*x1 + np.random.normal(0, .12, 1000)
+y = 1.1*x1 + 6.7*x2 + np.random.normal(0, .02, 1000)
 
-def parsePoint(line):
-    values = [x for x in line]
-	return LabeledPoint(values[0], values[1:])
-	
-# we then call on this function
-labeledData = dataTrnP.map(parsePoint)
+# create the array 
+dataMatrix = np.transpose(np.array([y, x1, x2]))
+
+# parallelize the data set 
+dataMatrixP = sc.parallelize(dataMatrix)
+
+# create the data Summary
+dataSummary = Statistics.colStats(dataMatrixP)
+
+# print out the values 
+print dataSummary.mean()
+print dataSummary.variance()
 ```
 
-**The Lambda Approach**
+now we simply submit the script to spark. 
 
-If you are not familiar with **lambda** expression in python, they are simply "anonymous" functions or "throw away" functions.
+To do this we go onto the Terminal, `cd` into the directory containing the script and do the following:
 
-```python
-from pyspark.mllib.regression import LabeledPoint
-
-labeledData = dataTrnP.map(lambda p: LabeledPoint(p[0], p[1:]))
+```bash 
+$ spark-submit --master local[*] columnStats.py
 ```
 
-both will yield the same result, but it is preffered by Spark, to if possible express functions with a lambda expression. 
+Here we are calling onto the program `spark-submit` (*note that this is assuming the bin directory of spark was added to .bashrc, otherwise a path to the spark-submit file is needed*) and giving several commands.
+
+First `--master` indicates where the master node of cluster is, since we are running a local cluster we pass the `local[*]` parameter.
+
+The `[*]` option in `local` indicates how many virtual cores to use. `*` indicates to use all possible cores, other option could have been 
+`2`, `4` and so on depending on the machine.
+
+Lastly we indicate what script we want to run, in our case `columnStats.py`, and thats it, we should see the output of the mean and variance of 
+each of the columns.
 
 
-#### Regression
-
-We are now able to train our model with the training data set.
-
-```python
-from pyspark.mllib.regression import LinearRegressionModel
 
 
-lrm = LinearRegressionWithSGD.train(labeledData)
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
